@@ -77,7 +77,7 @@ __hamming_loop_tail_bytes_to_int:       ; internal
         jnz     __hamming_loop_tail_bytes_to_int
         ret
 
-; Calculate hamming distance between n 64-bit segments
+; Calculate hamming distance between 2 n * 64-bit segments
 _hamming_64n:
         mov     r8, rdi                 ; move memory addresses to other registers
         mov     r9, rsi
