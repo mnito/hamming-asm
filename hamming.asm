@@ -52,7 +52,7 @@ __hamming_loop_tail:                    ; internal
 
         xor     rdi, rdi                ; zero out argument registers
         xor     rsi, rsi
-        call __hamming_loop_tail_bytes_to_int
+        call    __hamming_loop_tail_bytes_to_int
 
         call    _hamming_64             ; final _hamming_64 call
 
@@ -73,8 +73,8 @@ __hamming_loop_tail_bytes_to_int:       ; internal
         or      rsi, rbx
         add     r9, 1
 
-        dec rcx                         ; decrement counter for loop
-        jnz __hamming_loop_tail_bytes_to_int
+        dec     rcx                     ; decrement counter for loop
+        jnz     __hamming_loop_tail_bytes_to_int
         ret
 
 ; Calculate hamming distance between n 64-bit segments
@@ -99,19 +99,19 @@ _hamming_128:
 
 ; Calculate hamming distance between 2 n-sized byte arrays
 _hamming:
-        mov rax, rdx                    ; rdx has number of bytes -- set up for idiv
-        xor rdx, rdx                    ; zero out other bytes for idiv call
-        mov rcx, 8                      ; divisor for idiv
-        idiv rcx                        ; divide number of bytes by 8
-        mov rcx, rax                    ; move number of 64-bit segments to loop counter
+        mov     rax, rdx                ; rdx has number of bytes -- set up for idiv
+        xor     rdx, rdx                ; zero out other bytes for idiv call
+        mov     rcx, 8                  ; divisor for idiv
+        idiv    rcx                     ; divide number of bytes by 8
+        mov     rcx, rax                ; move number of 64-bit segments to loop counter
 
-        mov r8, rdi                     ; set up memory for loop
-        mov r9, rsi
-        xor r10, r10                    ; clear out for distances sum calculation
+        mov     r8, rdi                 ; set up memory for loop
+        mov     r9, rsi
+        xor     r10, r10                ; clear out for distances sum calculation
 
-        cmp rcx, 0
-        jnz __hamming_loop              ; enter loop
-        mov rax, 0                      ; return 0 if nothing to compute
+        cmp     rcx, 0
+        jnz     __hamming_loop          ; enter loop
+        mov     rax, 0                  ; return 0 if nothing to compute
         ret
 
 
@@ -119,26 +119,26 @@ _hamming:
 start:
         lea     r8, [s1]                ; load in address of s1
         lea     r9, [s2]                ; load in address of s2
-        mov rdi, [r10]                  ; dereference s1 into first argument
-        mov rsi, [r11]                  ; dereference s2 into second argument
-        call _hamming_64                ; result in rax
+        mov     rdi, [r10]              ; dereference s1 into first argument
+        mov     rsi, [r11]              ; dereference s2 into second argument
+        call    _hamming_64             ; result in rax
 
-        lea rdi, [s1]                   ; _hamming_64n takes an address
-        lea rsi, [s2]
-        mov rdx, 2                      ; number of 64-bit segments
-        call _hamming_64n               ; should have same result as _hamming_128
+        lea     rdi, [s1]               ; _hamming_64n takes an address
+        lea     rsi, [s2]
+        mov     rdx, 2                  ; number of 64-bit segments
+        call    _hamming_64n            ; should have same result as _hamming_128
 
-        lea rdi, [s1]                   ; _hamming_128 takes an address
-        lea rsi, [s2]
-        call _hamming_128               ; will take into account 2 64-bit segments
+        lea     rdi, [s1]               ; _hamming_128 takes an address
+        lea     rsi, [s2]
+        call    _hamming_128            ; will take into account 2 64-bit segments
 
-        lea rdi, [s1]
-        lea rsi, [s2]
-        mov rdx, 18                     ; will take into account 18 bytes
-        call _hamming
+        lea     rdi, [s1]
+        lea     rsi, [s2]
+        mov     rdx, 18                 ; will take into account 18 bytes
+        call    _hamming
 
-        xor rdi, rdi                    ; exit 0
-	mov rax, [exit]
+        xor     rdi, rdi                ; exit 0
+	mov     rax, [exit]
 	syscall
         ret
 
