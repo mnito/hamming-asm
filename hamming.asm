@@ -22,8 +22,8 @@ global _hamming
 ; Compute hamming distance between 2 64-bit integers
 _hamming_64:
         xor     rsi, rdi                ; xor bytes to reveal differences
-	popcnt  rax, rsi                ; count 1s to count differences
-	ret
+        popcnt  rax, rsi                ; count 1s to count differences
+        ret
 
 ; Internal loop for calculating hamming distance of larger values
 __hamming_loop:                         ; internal
@@ -138,8 +138,8 @@ start:
         call    _hamming
 
         xor     rdi, rdi                ; exit 0
-	mov     rax, [exit]
-	syscall
+        mov     rax, [exit]
+        syscall
         ret
 
 section .data
